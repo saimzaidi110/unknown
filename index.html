@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Artisan Supplies | Premium Art Materials</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #ee4036;
+        --secondary: #262261;
+        --accent: #faaf40;
+        --light: #ffffff;
+        --dark: #222222;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        color: var(--dark);
+        background-color: #f9f9f9;
+      }
+
+      /* Header Styles */
+      header {
+        background-color: var(--light);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.2rem 5%;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .logo {
+        font-family: "Playfair Display", serif;
+        font-weight: 600;
+        font-size: 1.8rem;
+        color: var(--secondary);
+      }
+
+      .logo span {
+        color: var(--primary);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+      }
+
+      .nav-links li {
+        list-style: none;
+        position: relative;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: var(--dark);
+        font-weight: 500;
+        font-size: 1.1rem;
+        transition: color 0.3s ease;
+      }
+
+      .nav-links a:hover {
+        color: var(--primary);
+      }
+
+      /* Dropdown Menu */
+      .dropdown {
+        position: relative;
+      }
+
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: var(--light);
+        min-width: 200px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        z-index: 1;
+        border-radius: 0 0 8px 8px;
+        overflow: hidden;
+      }
+
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+
+      .dropdown-content a {
+        color: var(--dark);
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        transition: background-color 0.3s;
+      }
+
+      .dropdown-content a:hover {
+        background-color: #f1f1f1;
+        color: var(--primary);
+      }
+
+      /* Hero Slider */
+      .hero {
+        height: 70vh;
+        margin-top: 70px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-slider {
+        width: 100%;
+        height: 100%;
+        position: relative;
+      }
+
+      .slide {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 1s ease;
+      }
+
+      .slide.active {
+        opacity: 1;
+      }
+
+      .slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .slide-content {
+        position: absolute;
+        top: 50%;
+        left: 10%;
+        transform: translateY(-50%);
+        color: var(--light);
+        max-width: 40%;
+      }
+
+      .slide-content h1 {
+        font-size: 3rem;
+        font-family: "Playfair Display", serif;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      .slide-content p {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+      }
+
+      .btn {
+        display: inline-block;
+        background-color: var(--accent);
+        color: var(--dark);
+        padding: 12px 30px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: 2px solid var(--accent);
+      }
+
+      .btn:hover {
+        background-color: transparent;
+        color: var(--light);
+      }
+
+      .slider-nav {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 10px;
+      }
+
+      .slider-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .slider-dot.active {
+        background-color: var(--light);
+      }
+
+      /* Categories Section */
+      .section-title {
+        text-align: center;
+        margin: 5rem 0 3rem;
+      }
+
+      .section-title h2 {
+        font-family: "Playfair Display", serif;
+        font-size: 2.5rem;
+        color: var(--secondary);
+        margin-bottom: 1rem;
+      }
+
+      .section-title p {
+        color: #666;
+        max-width: 700px;
+        margin: 0 auto;
+      }
+
+      .categories {
+        padding: 0 5% 5rem;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .category-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .category-card {
+        background-color: var(--light);
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .category-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .category-img {
+        height: 200px;
+        overflow: hidden;
+      }
+
+      .category-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+
+      .category-card:hover .category-img img {
+        transform: scale(1.1);
+      }
+
+      .category-info {
+        padding: 1.5rem;
+        text-align: center;
+      }
+
+      .category-info h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: var(--secondary);
+      }
+
+      .category-info p {
+        color: #666;
+        margin-bottom: 1.5rem;
+      }
+
+      .category-btn {
+        display: inline-block;
+        background-color: var(--primary);
+        color: var(--light);
+        padding: 8px 20px;
+        border-radius: 20px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .category-btn:hover {
+        background-color: var(--secondary);
+      }
+
+      /* Footer */
+      footer {
+        background-color: var(--secondary);
+        color: var(--light);
+        padding: 3rem 5%;
+      }
+
+      .footer-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+      }
+
+      .footer-col h3 {
+        font-family: "Playfair Display", serif;
+        margin-bottom: 1.5rem;
+        position: relative;
+        padding-bottom: 10px;
+      }
+
+      .footer-col h3::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 40px;
+        height: 2px;
+        background-color: var(--accent);
+      }
+
+      .footer-col p {
+        margin-bottom: 1rem;
+      }
+
+      .social-links {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .social-links a {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+      }
+
+      .social-links a:hover {
+        background-color: var(--accent);
+        transform: translateY(-3px);
+      }
+
+      .footer-bottom {
+        text-align: center;
+        padding-top: 2rem;
+        margin-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      /* Mobile Menu */
+      .menu-btn {
+        display: none;
+        cursor: pointer;
+      }
+
+      /* Responsive Styles */
+      @media (max-width: 992px) {
+        .nav-links {
+          position: fixed;
+          top: 70px;
+          left: 0;
+          width: 100%;
+          background-color: var(--light);
+          flex-direction: column;
+          align-items: center;
+          padding: 2rem 0;
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+          clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+          transition: clip-path 0.4s ease;
+        }
+
+        .nav-links.active {
+          clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+
+        .menu-btn {
+          display: block;
+        }
+
+        .dropdown-content {
+          position: static;
+          display: none;
+          box-shadow: none;
+        }
+
+        .dropdown:hover .dropdown-content {
+          display: none;
+        }
+
+        .dropdown.active .dropdown-content {
+          display: block;
+        }
+
+        .slide-content {
+          max-width: 80%;
+          left: 5%;
+        }
+
+        .slide-content h1 {
+          font-size: 2.2rem;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .hero {
+          height: 60vh;
+        }
+
+        .slide-content h1 {
+          font-size: 1.8rem;
+        }
+
+        .btn {
+          padding: 10px 20px;
+          font-size: 0.9rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar">
+        <a href="#" class="logo">Artisan<span>Supplies</span></a>
+
+        <div class="menu-btn">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M3 12H21"
+              stroke="#262261"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M3 6H21"
+              stroke="#262261"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M3 18H21"
+              stroke="#262261"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+
+        <ul class="nav-links">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li class="dropdown">
+            <a href="#">Categories</a>
+            <div class="dropdown-content">
+              <a href="#">Brushes</a>
+              <a href="#">Water Color</a>
+              <a href="#">Oil Paints</a>
+              <a href="#">Acrylic Paints</a>
+              <a href="#">Gouache Paints</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Hero Slider -->
+      <section class="hero">
+        <div class="hero-slider">
+          <div class="slide active">
+            <img
+              src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/2e6db5df-a826-4d38-a82f-0633f8728080.png"
+              alt="Art studio with wooden table filled with vibrant paints, brushes, and blank canvases ready for creation"
+            />
+            <div class="slide-content">
+              <h1>Premium Art Supplies</h1>
+              <p>
+                Discover our curated collection of high-quality materials for
+                artists at every level.
+              </p>
+              <a href="#" class="btn">Shop Now</a>
+            </div>
+          </div>
+          <div class="slide">
+            <img
+              src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/dff66965-fb1a-4e38-8f25-17a018cadb19.png"
+              alt="Close-up of an artist's hand holding a paintbrush creating colorful strokes on canvas"
+            />
+            <div class="slide-content">
+              <h1>Inspire Your Creativity</h1>
+              <p>
+                The finest materials to bring your artistic visions to life.
+              </p>
+              <a href="#" class="btn">Explore</a>
+            </div>
+          </div>
+          <div class="slide">
+            <img
+              src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/bd3d22e7-d281-4bf5-930e-88fc781da66e.png"
+              alt="Colorful assortment of artist grade paints in tubes and jars arranged beautifully"
+            />
+            <div class="slide-content">
+              <h1>Vibrant Colors</h1>
+              <p>
+                Experience pigments with exceptional lightfastness and vibrancy.
+              </p>
+              <a href="#" class="btn">View Paints</a>
+            </div>
+          </div>
+        </div>
+        <div class="slider-nav">
+          <div class="slider-dot active"></div>
+          <div class="slider-dot"></div>
+          <div class="slider-dot"></div>
+        </div>
+      </section>
+
+      <!-- Categories Section -->
+      <section class="categories">
+        <div class="section-title">
+          <h2>Our Categories</h2>
+          <p>
+            Explore our wide range of premium art supplies from trusted brands
+            worldwide
+          </p>
+        </div>
+
+        <div class="category-grid">
+          <div class="category-card">
+            <div class="category-img">
+              <img
+                src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8f4468a0-f921-4fb7-8a31-210c84c01118.png"
+                alt="Assortment of artist paint brushes with wooden handles arranged by size on textured surface"
+              />
+            </div>
+            <div class="category-info">
+              <h3>Brushes</h3>
+              <p>Premium brushes for every technique and medium</p>
+              <a href="#" class="category-btn">Shop Brushes</a>
+            </div>
+          </div>
+
+          <div class="category-card">
+            <div class="category-img">
+              <img
+                src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/2701a626-18f6-4c3a-966f-0350ebe507ec.png"
+                alt="Set of watercolor pans with vibrant colors and a watercolor painting in progress"
+              />
+            </div>
+            <div class="category-info">
+              <h3>Water Color</h3>
+              <p>High-quality watercolors with exceptional transparency</p>
+              <a href="#" class="category-btn">Shop Watercolor</a>
+            </div>
+          </div>
+
+          <div class="category-card">
+            <div class="category-img">
+              <img
+                src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/a1547ef6-e00f-4224-8bd3-5389bba848a8.png"
+                alt="Oil paint tubes in rich colors squeezed out on a palette with painting knives"
+              />
+            </div>
+            <div class="category-info">
+              <h3>Oil Paints</h3>
+              <p>Professional oil colors with superior pigmentation</p>
+              <a href="#" class="category-btn">Shop Oil Paints</a>
+            </div>
+          </div>
+
+          <div class="category-card">
+            <div class="category-img">
+              <img
+                src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/27106a30-791e-42af-9bcb-2fd1b8e4f153.png"
+                alt="Acrylic paint bottles and jars with bright colors and canvas with abstract painting"
+              />
+            </div>
+            <div class="category-info">
+              <h3>Acrylic Paints</h3>
+              <p>Fast-drying acrylics with rich, vibrant colors</p>
+              <a href="#" class="category-btn">Shop Acrylics</a>
+            </div>
+          </div>
+
+          <div class="category-card">
+            <div class="category-img">
+              <img
+                src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/467e9f12-cd59-472c-9c42-a044c43ead9a.png"
+                alt="Gouache paint set with creamy opaque colors and illustrative artwork samples"
+              />
+            </div>
+            <div class="category-info">
+              <h3>Gouache Paints</h3>
+              <p>Opaque watercolors perfect for illustration</p>
+              <a href="#" class="category-btn">Shop Gouache</a>
+            </div>
+          </div>
+
+          <div class="category-card">
+            <div class="category-img">
+              <img
+                src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/998bdcbf-821c-48e7-9a70-ee5b52c090b5.png"
+                alt="Artist sketching pencils, charcoal sticks and pastels arranged with shading examples"
+              />
+            </div>
+            <div class="category-info">
+              <h3>Drawing Materials</h3>
+              <p>Graphite, charcoal, and pastels for every artist</p>
+              <a href="#" class="category-btn">Shop Drawing</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-col">
+          <h3>Artisan Supplies</h3>
+          <p>
+            Providing premium art materials to artists and creators since 2010.
+            We curate only the finest products for your artistic journey.
+          </p>
+          <div class="social-links">
+            <a href="#">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M18 2H15C13.6739 2 12.4021 2.52678 11.4645 3.46447C10.5268 4.40215 10 5.67392 10 7V10H7V14H10V22H14V14H17L18 10H14V7C14 6.73478 14.1054 6.48043 14.2929 6.29289C14.4804 6.10536 14.7348 6 15 6H18V2Z"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+            <a href="#">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M23 3A10.9 10.9 0 0 1 18.18 20.89A10.9 10.9 0 0 1 8 21C3 20 1 15 2 10A11 11 0 0 1 12.28 3A7 7 0 0 0 8 8a7 7 0 0 0 5.78 6.89A7 7 0 0 1 2 16.83A11 11 0 0 0 6 19c3 1 5 0 6-1a5 5 0 0 1-4-4v-.78A5 5 0 0 0 10 8a5 5 0 0 1 5-5c1 0 3 0 4 2a5 5 0 0 0 4-2c0-.21 0-.5-.09-.78A5 5 0 0 0 23 3Z"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+            <a href="#">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M16 8A6 6 0 1 1 4 8a6 6 0 0 1 12 0zM12 15a7 7 0 0 0-7 7h14a7 7 0 0 0-7-7z"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+            <a href="#">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M22 11.08V12A10 10 0 1 1 12 2a10 10 0 0 1 7.5 3.32"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M22 4 12 14.01l-3-3"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h3>Quick Links</h3>
+          <a href="#">Home</a>
+          <a href="#">About Us</a>
+          <a href="#">Products</a>
+          <a href="#">Blog</a>
+          <a href="#">Contact</a>
+        </div>
+
+        <div class="footer-col">
+          <h3>Customer Service</h3>
+          <a href="#">Shipping Policy</a>
+          <a href="#">Returns & Exchanges</a>
+          <a href="#">FAQ</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+
+        <div class="footer-col">
+          <h3>Contact Us</h3>
+          <p>123 Artisan Street<br />Creative District<br />NY 10001</p>
+          <p>Email: info@artisansupplies.com</p>
+          <p>Phone: (123) 456-7890</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2023 Artisan Supplies. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Mobile Menu Toggle
+      const menuBtn = document.querySelector(".menu-btn");
+      const navLinks = document.querySelector(".nav-links");
+      const dropdowns = document.querySelectorAll(".dropdown");
+
+      menuBtn.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+      });
+
+      dropdowns.forEach((dropdown) => {
+        const link = dropdown.querySelector("a");
+
+        link.addEventListener("click", (e) => {
+          if (window.innerWidth <= 992) {
+            e.preventDefault();
+            dropdown.classList.toggle("active");
+          }
+        });
+      });
+
+      // Hero Slider
+      let currentSlide = 0;
+      const slides = document.querySelectorAll(".slide");
+      const dots = document.querySelectorAll(".slider-dot");
+
+      function showSlide(index) {
+        slides.forEach((slide) => slide.classList.remove("active"));
+        dots.forEach((dot) => dot.classList.remove("active"));
+
+        slides[index].classList.add("active");
+        dots[index].classList.add("active");
+      }
+
+      dots.forEach((dot, index) => {
+        dot.addEventListener("click", () => {
+          currentSlide = index;
+          showSlide(currentSlide);
+        });
+      });
+
+      // Auto slide change
+      setInterval(() => {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+      }, 5000);
+
+      // Initialize first slide
+      showSlide(0);
+    </script>
+  </body>
+</html>
+
+```
